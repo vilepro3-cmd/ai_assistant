@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshman AI Assistant - Ứng dụng Hỗ trợ Tân sinh viên</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f5ff',
+                            100: '#e0ebff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            purple: '#6366f1',
+                            accent: '#8b5cf6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        }
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-500/30">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900">Freshman<span class="gradient-text">AI</span></span>
+                        <span class="hidden sm:inline-block text-xs bg-blue-100 text-brand-700 px-2 py-0.5 rounded-full font-semibold ml-2">Phiên bản Demo Báo Cáo</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                    <a href="#hero" class="hover:text-brand-600 transition-colors">Giới thiệu</a>
+                    <a href="#prompt-structure" class="hover:text-brand-600 transition-colors">Cấu trúc Prompt</a>
+                    <a href="#demo-chat" class="hover:text-brand-600 transition-colors">Demo Simulator</a>
+                    <a href="#comparison" class="hover:text-brand-600 transition-colors">So sánh & Kiểm chứng</a>
+                    <a href="#data-safety" class="hover:text-brand-600 transition-colors">An toàn dữ liệu</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="#demo-chat" class="px-4 py-2 rounded-xl gradient-bg text-white text-sm font-semibold shadow-md shadow-purple-500/20 hover:opacity-95 transition">
+                        Thử ngay <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero" class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 bg-gradient-to-b from-blue-50/50 via-white to-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100/80 text-brand-700 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+                    <i class="fa-solid fa-sparkles"></i> Ứng dụng Hỗ trợ Tân Sinh viên Năm Nhất
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                    Đồng hành Học tập & Hội nhập cùng <span class="gradient-text">Freshman AI</span>
+                </h1>
+                <p class="text-base sm:text-lg text-slate-600 mb-8 leading-relaxed">
+                    Giải pháp trợ lý thông minh chuẩn bị cho tân sinh viên bước vào môi trường đại học. Định hướng tư duy, phát triển kỹ năng mềm mà vẫn đảm bảo tính tự lập và an toàn tuyệt đối.
+                </p>
+
+                <!-- 3 Core Principles Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-4xl mx-auto">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg font-bold mb-3">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-1">Phương pháp Gợi mở</h3>
+                        <p class="text-xs text-slate-500">Đặt câu hỏi ngược, cung cấp khung tư duy để sinh viên tự tìm ra giải pháp cho bài toán.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-lg font-bold mb-3">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-1">Không cho Đáp án sẵn</h3>
+                        <p class="text-xs text-slate-500">Tuyệt đối không giải bài tập hộ, tránh tâm lý phụ thuộc và mất đi tư duy phản biện.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg font-bold mb-3">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-1">Bảo mật Dữ liệu</h3>
+                        <p class="text-xs text-slate-500">Tuân thủ 5 quy tắc an toàn thông tin cá nhân, mã sinh viên và bảo mật riêng tư.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM MEMBERS SECTION -->
+    <section id="team" class="py-12 bg-white border-t border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-blue-100 px-3 py-1 rounded-full">Thực Hiện Dự Án</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Thành Viên Nhóm Chợ Lớn Phát Triển</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Đội ngũ xây dựng ý tưởng, thiết kế prompt và kiểm chứng ứng dụng</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Member 1: Leader -->
+                <div class="bg-gradient-to-b from-slate-50 via-white to-blue-50/30 p-6 rounded-3xl border-2 border-brand-500/30 shadow-md hover:shadow-xl transition-all duration-300 relative group overflow-hidden">
+                    <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                        <i class="fa-solid fa-crown text-amber-300 mr-1"></i> Trưởng nhóm
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl gradient-bg text-white font-extrabold text-xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+                        NY
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-base mb-1">Trần Ngọc Như Ý</h3>
+                    <p class="text-xs font-semibold text-brand-600 mb-3">Nhóm trưởng / Điều phối dự án</p>
+                    <p class="text-xs text-slate-500 leading-relaxed border-t border-slate-200/80 pt-3">
+                        Quản lý tiến độ, tổng hợp nội dung báo cáo 3-5 phút và định hướng tổng quan ứng dụng.
+                    </p>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="bg-slate-50/80 p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-purple-300 transition-all duration-300 group">
+                    <div class="w-16 h-16 rounded-2xl bg-purple-600 text-white font-extrabold text-xl flex items-center justify-center mb-4 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+                        BT
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-base mb-1">Đỗ Ngọc Bảo Thi</h3>
+                    <p class="text-xs font-semibold text-purple-600 mb-3">Thành viên / Thiết kế Prompt</p>
+                    <p class="text-xs text-slate-500 leading-relaxed border-t border-slate-200/80 pt-3">
+                        Phụ trách xây dựng Prompt cấu trúc 5 phần chuẩn và tối ưu hóa câu lệnh gợi mở.
+                    </p>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="bg-slate-50/80 p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-emerald-300 transition-all duration-300 group">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-600 text-white font-extrabold text-xl flex items-center justify-center mb-4 shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                        CD
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-base mb-1">Vòng Ân Trúc Dung</h3>
+                    <p class="text-xs font-semibold text-emerald-600 mb-3">Thành viên / Thử nghiệm & Kiểm chứng AI</p>
+                    <p class="text-xs text-slate-500 leading-relaxed border-t border-slate-200/80 pt-3">
+                        Thử nghiệm trên 2 công cụ AI, phát hiện lỗi thông tin (Hallucination) và đối chứng dữ liệu.
+                    </p>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="bg-slate-50/80 p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-rose-300 transition-all duration-300 group">
+                    <div class="w-16 h-16 rounded-2xl bg-rose-500 text-white font-extrabold text-xl flex items-center justify-center mb-4 shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform">
+                        LV
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-base mb-1">Lê Vi</h3>
+                    <p class="text-xs font-semibold text-rose-600 mb-3">Thành viên / An toàn dữ liệu & Báo cáo</p>
+                    <p class="text-xs text-slate-500 leading-relaxed border-t border-slate-200/80 pt-3">
+                        Soạn thảo 5 quy tắc bảo mật dữ liệu người dùng và hỗ trợ hoàn thiện tài liệu thuyết trình.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PROMPT STRUCTURE & INTERACTIVE DEMO CHAT -->
+    <section id="demo-chat" class="py-16 bg-white border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Mẫu Prompt 5 Phần & Chat Simulator</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">Mô phỏng phản hồi của AI theo đúng Prompt chuẩn 5 phần thiết kế cho Khoa</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Prompt 5-Part Structure Accordion / View -->
+                <div id="prompt-structure" class="lg:col-span-5 bg-slate-900 text-slate-100 p-6 rounded-3xl shadow-xl space-y-4">
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                        <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                            <i class="fa-solid fa-code text-brand-500"></i> Cấu trúc Prompt (5 Phần)
+                        </h3>
+                        <span class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full font-mono">System Prompt</span>
+                    </div>
+
+                    <div class="space-y-3 text-xs sm:text-sm font-mono overflow-y-auto max-h-[500px] pr-2">
+                        <!-- Part 1 -->
+                        <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                            <span class="text-blue-400 font-bold block mb-1">1. VAI TRÒ (Role)</span>
+                            <p class="text-slate-300">Bạn là Trợ lý ảo Tư vấn Học đường thông minh, tận tâm đồng hành cùng sinh viên năm nhất đại học.</p>
+                        </div>
+                        <!-- Part 2 -->
+                        <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                            <span class="text-purple-400 font-bold block mb-1">2. NGỮ CẢNH (Context)</span>
+                            <p class="text-slate-300">Tân sinh viên bỡ ngỡ với cách học tín chỉ, kỹ năng mềm, CLB và cuộc sống tự lập. Tránh để sinh viên phụ thuộc AI.</p>
+                        </div>
+                        <!-- Part 3 -->
+                        <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                            <span class="text-emerald-400 font-bold block mb-1">3. NHIỆM VỤ (Task)</span>
+                            <p class="text-slate-300">Hướng dẫn tân sinh viên giải quyết khó khăn học tập, quy trình thủ tục và lựa chọn hoạt động ngoại khóa phù hợp.</p>
+                        </div>
+                        <!-- Part 4 -->
+                        <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                            <span class="text-amber-400 font-bold block mb-1">4. RÀNG BUỘC (Constraints)</span>
+                            <p class="text-slate-300">TUYỆT ĐỐI KHÔNG đưa đáp án trực tiếp hay làm bài hộ. Chỉ dùng câu hỏi gợi mở. Đảm bảo an toàn dữ liệu cá nhân.</p>
+                        </div>
+                        <!-- Part 5 -->
+                        <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                            <span class="text-rose-400 font-bold block mb-1">5. ĐỊNH DẠNG (Format)</span>
+                            <p class="text-slate-300">Trả lời theo 3 phần: [Thấu hiểu/Động viên] ➔ [Gợi mở vấn đề] ➔ [Gợi ý bước tiếp theo].</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Simulator -->
+                <div class="lg:col-span-7 bg-white rounded-3xl border border-slate-200 shadow-xl flex flex-col h-[600px] overflow-hidden">
+                    <!-- Chat Header -->
+                    <div class="p-4 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <div class="w-9 h-9 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-sm">
+                                    <i class="fa-solid fa-robot"></i>
+                                </div>
+                                <span class="w-3 h-3 bg-emerald-500 border-2 border-white rounded-full absolute bottom-0 right-0"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Freshman Assistant Bot</h4>
+                                <p class="text-xs text-slate-500">Hoạt động dựa trên Prompt 5 phần chuẩn</p>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="text-xs text-slate-500 hover:text-slate-800 px-3 py-1.5 rounded-lg border border-slate-300 bg-white">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Làm mới
+                        </button>
+                    </div>
+
+                    <!-- Chat Messages Area -->
+                    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 chat-scroll bg-slate-50/50">
+                        <!-- Welcome message -->
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white text-xs shrink-0 mt-1">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200 text-slate-800 text-sm shadow-sm max-w-[85%] space-y-2">
+                                <p class="font-semibold text-brand-600"><i class="fa-solid fa-hand-wave"></i> Chào bạn Tân sinh viên!</p>
+                                <p>Mình là Trợ lý ảo tư vấn tân sinh viên. Mình có thể giúp gì cho bạn hôm nay? Bạn có thể thử chọn các câu hỏi mẫu phía dưới nhé!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Prompts Quick Select -->
+                    <div class="p-2.5 bg-slate-100/80 border-t border-slate-200 overflow-x-auto whitespace-nowrap flex gap-2">
+                        <span class="text-xs font-semibold text-slate-500 self-center pl-2">Gợi ý:</span>
+                        <button onclick="sendPreset('Làm sao để làm bài luận môn Kỹ năng mềm?')" class="text-xs bg-white hover:bg-blue-50 text-slate-700 hover:text-brand-600 border border-slate-200 px-3 py-1.5 rounded-full transition shadow-sm inline-block">
+                            📝 Làm bài luận Kỹ năng mềm thế nào?
+                        </button>
+                        <button onclick="sendPreset('Nên tham gia CLB nào ở trường đại học?')" class="text-xs bg-white hover:bg-blue-50 text-slate-700 hover:text-brand-600 border border-slate-200 px-3 py-1.5 rounded-full transition shadow-sm inline-block">
+                            🎨 Tân sinh viên nên chọn CLB nào?
+                        </button>
+                        <button onclick="sendPreset('Cho mình xin đáp án bài tập Kinh tế vĩ mô phần Cung - Cầu')" class="text-xs bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 border border-slate-200 px-3 py-1.5 rounded-full transition shadow-sm inline-block">
+                            ⚠️ (Thử vi phạm) Xin đáp án Kinh tế vĩ mô
+                        </button>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-slate-200 flex gap-2">
+                        <input type="text" id="user-input" placeholder="Nhập thắc mắc của tân sinh viên..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition">
+                        <button type="submit" class="gradient-bg text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-95 transition shadow-md shadow-purple-500/20">
+                            Gửi <i class="fa-solid fa-paper-plane ml-1"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. AI COMPARISON & HALLUCINATION CHECK TABLE -->
+    <section id="comparison" class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-blue-100 px-3 py-1 rounded-full">Nhiệm vụ 2</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Bảng So Sánh Thử Nghiệm 2 Công Cụ AI</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Nhận diện 1 điểm sai sót (Hallucination) của AI và quy trình kiểm chứng thực tế</p>
+            </div>
+
+            <!-- Comparison Table Card -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden mb-12">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900 text-white text-sm">
+                                <th class="p-4 sm:p-5 w-1/4 font-semibold">Tiêu chí đánh giá</th>
+                                <th class="p-4 sm:p-5 w-3/8 font-semibold bg-slate-800 border-l border-slate-700">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-bolt text-amber-400"></i> Công cụ A (ChatGPT-4o)
+                                    </div>
+                                </th>
+                                <th class="p-4 sm:p-5 w-3/8 font-semibold border-l border-slate-700">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-brain text-purple-400"></i> Công cụ B (Claude 3.5 Sonnet)
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-xs sm:text-sm text-slate-700">
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="p-4 font-bold text-slate-900 bg-slate-50/50">
+                                    Tuân thủ Ràng buộc<br><span class="font-normal text-xs text-slate-500">(Không cho đáp án trực tiếp)</span>
+                                </td>
+                                <td class="p-4 bg-blue-50/20 border-l border-slate-200">
+                                    <span class="inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded text-xs mb-1">
+                                        <i class="fa-solid fa-check"></i> Tốt
+                                    </span>
+                                    <p>Tuân thủ gợi mở, đưa câu hỏi phản biện dẫn dắt sinh viên tự làm.</p>
+                                </td>
+                                <td class="p-4 border-l border-slate-200">
+                                    <span class="inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded text-xs mb-1">
+                                        <i class="fa-solid fa-check"></i> Xuất sắc
+                                    </span>
+                                    <p>Phân tích cấu trúc gợi mở chặt chẽ, phong cách sư phạm tự nhiên.</p>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="p-4 font-bold text-slate-900 bg-slate-50/50">
+                                    Định dạng 5 phần
+                                </td>
+                                <td class="p-4 bg-blue-50/20 border-l border-slate-200">
+                                    Đầy đủ 3 phần format đầu ra, trình bày trực quan bằng emoji.
+                                </td>
+                                <td class="p-4 border-l border-slate-200">
+                                    Đúng định dạng yêu cầu, câu văn ngắn gọn, dễ tiếp thu.
+                                </td>
+                            </tr>
+
+                            <!-- HIGHLIGHT HALLUCINATION ROW -->
+                            <tr class="bg-rose-50/60 font-medium">
+                                <td class="p-4 font-bold text-rose-900 bg-rose-100/50">
+                                    <i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> 
+                                    Lỗi Sai Sót Dữ Liệu<br><span class="font-normal text-xs text-rose-700">(Hallucination nhận diện)</span>
+                                </td>
+                                <td class="p-4 border-l border-slate-200 text-rose-900">
+                                    <span class="inline-block bg-rose-200 text-rose-800 text-xs px-2 py-0.5 rounded font-bold mb-1">PHÁT HIỆN LỖI SAI</span>
+                                    <p class="text-xs sm:text-sm">Khi hỏi về <i>"Hạn cuối hủy học phần kỳ 1"</i>, AI tự tạo ra mốc thời gian cụ thể: <b>"Hạn cuối là ngày 15/10 hàng năm"</b> (Số liệu giả định không căn cứ quy chế nhà trường).</p>
+                                </td>
+                                <td class="p-4 border-l border-slate-200 text-slate-700">
+                                    <span class="inline-block bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold mb-1">CHÍNH XÁC</span>
+                                    <p class="text-xs sm:text-sm">AI trả lời: <i>"Quy định hủy học phần phụ thuộc từng trường. Bạn nên kiểm tra Sổ tay Sinh viên hoặc Cổng thông tin Đào tạo chính thức."</i></p>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="p-4 font-bold text-slate-900 bg-slate-50/50">
+                                    Đánh giá An toàn Dữ liệu
+                                </td>
+                                <td class="p-4 bg-blue-50/20 border-l border-slate-200">
+                                    Cảnh báo ngay khi người dùng nhập MSSV hoặc mật khẩu.
+                                </td>
+                                <td class="p-4 border-l border-slate-200">
+                                    Tự động ẩn/nhắc nhở người dùng loại bỏ thông tin nhạy cảm.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Hallucination Verification Detail Card -->
+            <div class="bg-white rounded-2xl border-2 border-rose-200 p-6 shadow-md relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 text-slate-100 text-9xl font-extrabold select-none pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-lg font-bold text-rose-900 flex items-center gap-2 mb-3">
+                        <i class="fa-solid fa-square-check text-rose-600"></i> Quy Trình Kiểm Chứng Thông Tin Sai (Verification Process)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+                        <div class="bg-rose-50/50 p-4 rounded-xl border border-rose-100">
+                            <span class="font-bold text-rose-800 block mb-1">Bước 1: Phát hiện điểm nghi vấn</span>
+                            <p class="text-slate-600">AI khẳng định mốc thời gian cố định "15/10" áp dụng cho mọi tân sinh viên mà không hỏi tên trường.</p>
+                        </div>
+                        <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                            <span class="font-bold text-amber-800 block mb-1">Bước 2: Tra cứu nguồn đối chứng</span>
+                            <p class="text-slate-600">Đối chiếu với **Sổ tay Sinh viên 2026** và **Quy chế Đào tạo tín chỉ** chính thức của Nhà trường.</p>
+                        </div>
+                        <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-emerald-800 block mb-1">Bước 3: Kết luận & Điều chỉnh</span>
+                            <p class="text-slate-600">Thực tế hạn hủy học phần là <b>2 tuần sau khi bắt đầu học kỳ</b>. Đã bổ sung ràng buộc "Không tự bịa mốc thời gian" vào Prompt.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. DATA SAFETY RULES FOR USERS -->
+    <section id="data-safety" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">Nhiệm vụ 3</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">5 Quy Tắc An Toàn Dữ Liệu Cho Người Dùng</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Bảo vệ thông tin cá nhân và an toàn trên không gian mạng dành cho Tân sinh viên</p>
+            </div>
+
+            <!-- 5 Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Rule 1 -->
+                <div class="bg-gradient-to-b from-slate-50 to-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-100 text-brand-600 flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <span class="text-xs font-bold text-brand-600 tracking-wider uppercase block mb-1">Quy tắc 01</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Không chia sẻ dữ liệu định danh nhạy cảm</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Tuyệt đối không nhập số CCCD/CMND, mật khẩu cổng thông tin sinh viên, mã PIN ngân hàng hoặc địa chỉ nhà riêng vào các đoạn chat với AI.
+                    </p>
+                </div>
+
+                <!-- Rule 2 -->
+                <div class="bg-gradient-to-b from-slate-50 to-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-user-lock"></i>
+                    </div>
+                    <span class="text-xs font-bold text-purple-600 tracking-wider uppercase block mb-1">Quy tắc 02</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Giới hạn quyền truy cập cá nhân</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Chỉ cung cấp các thông tin chung (ngành học, sở thích, kỹ năng muốn phát triển) để nhận tư vấn. Từ chối quyền truy cập danh bạ hay vị trí GPS.
+                    </p>
+                </div>
+
+                <!-- Rule 3 -->
+                <div class="bg-gradient-to-b from-slate-50 to-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600 tracking-wider uppercase block mb-1">Quy tắc 03</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Đăng xuất trên thiết bị công cộng</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Luôn đăng xuất tài khoản ứng dụng và xóa lịch sử duyệt web khi sử dụng máy tính phòng máy của trường, thư viện hoặc tiệm internet.
+                    </p>
+                </div>
+
+                <!-- Rule 4 -->
+                <div class="bg-gradient-to-b from-slate-50 to-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-link-slash"></i>
+                    </div>
+                    <span class="text-xs font-bold text-rose-600 tracking-wider uppercase block mb-1">Quy tắc 04</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Cảnh giác với liên kết ngoài</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Khi AI gợi ý các tài liệu tham khảo bên ngoài, tân sinh viên cần kiểm tra kỹ đường link (domain chính chủ .edu.vn), tránh bẫy lừa đảo (phishing).
+                    </p>
+                </div>
+
+                <!-- Rule 5 -->
+                <div class="bg-gradient-to-b from-slate-50 to-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group md:col-span-2 lg:col-span-1">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-trash-can-arrow-up"></i>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase block mb-1">Quy tắc 05</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Quyền kiểm soát & Xóa lịch sử</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Chủ động yêu cầu ứng dụng xóa lịch sử trò chuyện (Chat History) định kỳ và có quyền hủy tài khoản khi không còn nhu cầu sử dụng.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / PRESENTATION DIRECTIVE -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2 text-white font-extrabold text-lg">
+                <div class="w-7 h-7 rounded-lg gradient-bg flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                Freshman AI Assistant Project
+            </div>
+            <p class="text-xs text-slate-500 max-w-xl mx-auto">
+                Sản phẩm demo phục vụ thuyết trình báo cáo 3 - 5 phút bài tập Thiết kế ứng dụng hỗ trợ Tân sinh viên.
+            </p>
+            <div class="pt-4 text-xs text-slate-600">
+                &copy; 2026 Academic Support App Initiative. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Preset Knowledge Base responding in strict 5-part structure
+        const responses = {
+            "luận": {
+                part1: "👋 Thấu hiểu: Bài luận môn Kỹ năng mềm ở năm nhất thường làm nhiều bạn bỡ ngỡ vì đòi hỏi cách viết lập luận cá nhân thay vì học thuộc!",
+                part2: "💡 Gợi mở: Thay vì tìm bài mẫu để chép, bạn thử suy nghĩ: Mục đích chính của bài luận này là đánh giá trải nghiệm hay tư duy giải quyết vấn đề của bạn?",
+                part3: "📌 Bước tiếp theo:\n1. Liệt kê 3 sự kiện/kỹ năng bạn thực sự ấn tượng gần đây.\n2. Áp dụng mô hình STAR (Situation - Task - Action - Result) để dựng dàn ý.\n3. Viết thử bản thô đầu tiên và tự đọc lại xem đã đủ thuyết phục chưa?"
+            },
+            "clb": {
+                part1: "👋 Thấu hiểu: Quyết định tham gia CLB là bước khởi đầu rất tuyệt vời để mở rộng mối quan hệ và rèn luyện kỹ năng năm nhất!",
+                part2: "💡 Gợi mở: Đừng chỉ chọn CLB theo phong trào. Hãy tự hỏi: Mục tiêu ưu tiên nhất của bạn trong năm đầu là gì (Phát triển chuyên môn, xả stress hay rèn kỹ năng giao tiếp)?",
+                part3: "📌 Bước tiếp theo:\n1. Chọn ra tối đa 1-2 CLB thực sự phù hợp để không bị quá tải học tập.\n2. Tham gia Ngày hội Phỏng vấn CLB (Club Day) để trải nghiệm thực tế văn hóa các nhóm.\n3. Đặt lịch quản lý thời gian cân bằng giữa việc học và sinh hoạt."
+            },
+            "đáp án": {
+                part1: "⚠️ Cảnh báo An toàn & Quy tắc: Trợ lý AI tuân thủ nghiêm ngặt nguyên tắc KHÔNG cung cấp đáp án trực tiếp bài tập hoặc bài kiểm tra!",
+                part2: "💡 Gợi mở: Để hiểu bản chất phần Cung - Cầu Kinh tế vĩ mô, bạn đã nắm rõ cách xác định điểm cân bằng thị trường P và Q chưa?",
+                part3: "📌 Bước tiếp theo:\n1. Ôn lại công thức tính Cung Qs = Qd tại điểm cân bằng.\n2. Vẽ đồ thị minh họa sự dịch chuyển của đường Cung/Cầu.\n3. Hãy gửi bước tính của bạn, mình sẽ hỗ trợ kiểm tra logic suy luận!"
+            },
+            "default": {
+                part1: "👋 Thấu hiểu: Chào bạn tân sinh viên! Rất vui được đồng hành cùng bạn giải quyết thắc mắc này.",
+                part2: "💡 Gợi mở: Môi trường đại học khuyến khích khả năng chủ động. Bạn đã thử tìm kiếm thông tin này trong Sổ tay Sinh viên hoặc Cổng thông tin Đào tạo chưa?",
+                part3: "📌 Bước tiếp theo:\n1. Xác định chính xác từ khóa chính của thắc mắc này.\n2. Tra cứu quy định liên quan tại website chính thức của nhà trường.\n3. Thảo luận thêm với Cố vấn học tập hoặc Trợ giảng (TA) môn học nếu cần!"
+            }
+        };
+
+        function sendPreset(text) {
+            const input = document.getElementById('user-input');
+            input.value = text;
+            handleChatSubmit(new Event('submit'));
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Render User Message
+            renderUserMessage(message);
+            input.value = '';
+
+            // Generate AI response after simulated delay
+            setTimeout(() => {
+                let key = 'default';
+                const lower = message.toLowerCase();
+                if (lower.includes('luận') || lower.includes('kỹ năng')) key = 'luận';
+                else if (lower.includes('clb') || lower.includes('ngoại khóa')) key = 'clb';
+                else if (lower.includes('đáp án') || lower.includes('kinh tế') || lower.includes('giải')) key = 'đáp án';
+
+                renderAiResponse(responses[key]);
+            }, 600);
+        }
+
+        function renderUserMessage(text) {
+            const container = document.getElementById('chat-messages');
+            const msgHtml = `
+                <div class="flex gap-3 justify-end">
+                    <div class="bg-brand-600 text-white p-3.5 rounded-2xl rounded-tr-none text-sm shadow-sm max-w-[80%]">
+                        <p>${escapeHtml(text)}</p>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs shrink-0 mt-1 font-bold">
+                        SV
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', msgHtml);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function renderAiResponse(res) {
+            const container = document.getElementById('chat-messages');
+            const msgHtml = `
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white text-xs shrink-0 mt-1">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 text-slate-800 text-sm shadow-sm max-w-[85%] space-y-3">
+                        <div class="p-2.5 bg-blue-50/60 rounded-xl border border-blue-100 text-blue-900 font-medium">
+                            ${res.part1}
+                        </div>
+                        <div class="p-2.5 bg-purple-50/60 rounded-xl border border-purple-100 text-purple-900">
+                            ${res.part2}
+                        </div>
+                        <div class="p-2.5 bg-emerald-50/60 rounded-xl border border-emerald-100 text-emerald-900 whitespace-pre-line">
+                            ${res.part3}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', msgHtml);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearChat() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = `
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white text-xs shrink-0 mt-1">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 text-slate-800 text-sm shadow-sm max-w-[85%] space-y-2">
+                        <p class="font-semibold text-brand-600"><i class="fa-solid fa-hand-wave"></i> Chào bạn Tân sinh viên!</p>
+                        <p>Lịch sử trò chuyện đã được làm mới. Hãy chọn hoặc nhập câu hỏi mới nhé!</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
